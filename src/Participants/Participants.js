@@ -1,59 +1,51 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import * as PropTypes from "prop-types";
 
-export class Participants extends Component {
-  state = {
-    inscrit: "",
-  };
+export function Participants({
+  onInscription,
+  participants,
+}) {
+  const [inscrit, setInscrit] = useState("");
 
-  render() {
-    const { onInscription, participants } = this.props;
+  return (
+    <div data-testid="participants">
+      <h3>
+        {participants.length === 0 && "Aucun participant"}
+        {participants.length === 1 && "1 participant"}
+        {participants.length > 1 &&
+          participants.length + " participants"}
+      </h3>
 
-    const { inscrit } = this.state;
+      <ul>
+        {participants.map((p) => (
+          <li key={p}>{p}</li>
+        ))}
+      </ul>
 
-    return (
-      <div data-testid="participants">
-        <h3>
-          {participants.length === 0 && "Aucun participant"}
-          {participants.length === 1 && "1 participant"}
-          {participants.length > 1 &&
-            participants.length + " participants"}
-        </h3>
-
-        <ul>
-          {participants.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ul>
-
-        <div>
-          <input
-            type="text"
-            data-testid="inscription-nom"
-            onChange={(event) =>
-              this.setState({ inscrit: event.target.value })
-            }
-            value={inscrit}
-          />
-          <button
-            data-testid="inscription"
-            onClick={() => {
-              onInscription(inscrit);
-              this.setState({ inscrit: "" });
-            }}
-          >
-            Inscription
-          </button>
-        </div>
+      <div>
+        <input
+          type="text"
+          data-testid="inscription-nom"
+          onChange={(event) =>
+            setInscrit(event.target.value)
+          }
+          value={inscrit}
+        />
+        <button
+          data-testid="inscription"
+          onClick={() => {
+            onInscription(inscrit);
+            setInscrit("");
+          }}
+        >
+          Inscription
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 Participants.propTypes = {
   participants: PropTypes.arrayOf(PropTypes.string),
-  callbackfn: PropTypes.func,
-  onChange: PropTypes.func,
-  value: PropTypes.string,
-  onClick: PropTypes.func,
+  onInscription: PropTypes.func.isRequired,
 };
