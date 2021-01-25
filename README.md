@@ -1,6 +1,5 @@
-# Étape : Inscription des participants
+# Étape : Saisie des dépenses
 
 ## 💡 Idées de TODO
 
-- [ ] Empêcher l'inscription du même participant plusieurs fois
-- [ ] Gestion du pluriel du nombre de participants plus expressive
+- [ ] Sélectionner le payeur dans une liste des participants. Pas un texte libre.
